@@ -88,6 +88,36 @@ select {
   background-color: hsl(115, 29%, 43%)
 }
 
+.keyboard{
+  height: 200px;
+  }
+  
+  .keyboard__row{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto 8px;
+    touch-action: manipulation;
+  }
+  .keyboard__row button {
+    font-weight: bold;
+    border:0;
+    height: 58px;
+    cursor: pointer;
+    background-color: rgb(129, 131, 132);
+    color:antiquewhite;
+    flex-grow: 1;
+    text-transform: uppercase;
+    margin-right: 6px ; 
+    border-radius: 4px ;
+    user-select: none;
+  }
+  .keyboard__row button.key--special{
+    flex-grow: 1.5;
+  }
+  .spacer-row{
+    flex-grow: 0.5;
+  }
 
 
 
