@@ -88,6 +88,7 @@ select {
   background-color: hsl(115, 29%, 43%)
 }
 
+<<<<<<< HEAD
 .keyboard{
   height: 200px;
   }
@@ -118,6 +119,24 @@ select {
   .spacer-row{
     flex-grow: 0.5;
   }
+=======
+@keyframes key--flip {
+  0% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+  }
+  50% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+  }
+  100% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+  }
+}
+.flip {
+  backface-visibility: visible;
+  animation-name: key--flip;
+  animation-duration: 2s;
+}
+>>>>>>> 6090fbb3dc769d2ca08a9a51b5c17fd97f54ea6a
 
 
 
