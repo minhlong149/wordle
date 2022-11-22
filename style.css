@@ -44,6 +44,19 @@ body {
 }
 
 /* OVERALL LAYOUT */
+.wordle-app-game {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.board {
+flex-grow: grow;
+height: 100%;
+}
 
 /* BOARD */
 
