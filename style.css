@@ -54,8 +54,8 @@ body {
 }
 
 .board {
-flex-grow: grow;
-height: 100%;
+  flex-grow: grow;
+  height: 100%;
 }
 
 /* BOARD */
