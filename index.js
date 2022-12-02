@@ -15,6 +15,8 @@ let guesses = [
   ["", "", "", "", ""],
 ];
 
+
+
 // gọi hàm getUserGuess lấy từ mà người dùng đoán dưới dạng chuỗi
 function getUserGuess(row = currentRow) {
   return guesses[row].join("");
@@ -105,8 +107,11 @@ function updateTileLetter(
 ) {
   // TODO: Cập nhập ký tự letter lên Board
   // dựa vào row và tile để xác định vị trí cần thêm vào
+  row++;
+  const nextRow = document.getElementById('row-' + row);
+  const nextTile = nextRow.querySelectorAll('span.tile');
+  nextTile[tile].textContent=letter
 
-  // Gợi ý: Thay đổi nội dung trong thẻ tile tương ứng
 }
 
 function canAddLetter(tile = currentTile) {
@@ -248,7 +253,15 @@ function addKeysColor(result, guessRow = guesses[currentRow]) {
 
 // TODO: Tạo sự kiện cho các phím trên bàn phím thực
 // có thể xử lý được như dùng bàn phím trên trang web
+addEventListener("keyup",function(event){
 
+  if(event.keyCode >= 65 && event.keyCode <= 90)
+    addLetter(event.key);
+  else if (event.keyCode == 13)
+    submitGuess();
+  else if (event.keyCode == 8)
+    deleteLetter();
+})
 // Chỉ yêu cầu các phím chữ cái, nút xoá (backspace) và enter
 
 // -------------------------------------------------------------
