@@ -317,35 +317,6 @@ async function updateTargetWords() {
 }
 
 // -------------------------------------------------------------
-// TEST
-
-async function testGuessChecker() {
-  // https://github.com/yukosgiti/wordle-tests
-  let errorCount = 0;
-
-  const response = await fetch("./data/tests.json");
-  const bigTestCase = await response.json();
-
-  bigTestCase.forEach((testWord) => {
-    const word = testWord.slice(0, 5);
-    const guess = testWord.slice(6, 11);
-
-    const output = checkUserGuess(guess, word).reduce(
-      (outStr, char) =>
-        outStr + (isCorrect(char) ? "c" : isPresent(char) ? "m" : "w"),
-      ""
-    );
-
-    if (output !== testWord.slice(12, 17)) {
-      console.log(testWord, output);
-      errorCount++;
-    }
-  });
-
-  console.log(`Test Done! ${errorCount} error.`);
-}
-
-// -------------------------------------------------------------
 // UTILS
 
 function newGame() {

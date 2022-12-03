@@ -1,0 +1,23 @@
+{
+  "name": "wordle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhlong149/wordle.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minhlong149/wordle/issues"
+  },
+  "homepage": "https://github.com/minhlong149/wordle#readme",
+  "devDependencies": {
+    "jest": "^29.3.1"
+  }
+}
