@@ -133,11 +133,11 @@ function submitGuess() {
     // chứa 1 trong 3 giá trị correct, present hoặc absent
 
     addTilesColor(result);
-    addTilesAnimation;
+    addTilesAnimation();
 
     if (guessIsCorrect(result)) {
       isWinning = true;
-      console.log("Guess is correct");
+      showWinningMessage();
     } else {
       console.log("Guess is NOT correct");
 
@@ -146,11 +146,12 @@ function submitGuess() {
       currentTile = 0;
 
       if (gameIsOver()) {
-        console.log(`You lose! Keyword is ${keyword}`);
+        showLosingMessage();
       }
     }
   } else {
     console.log(`Guess '${getUserGuess()}' is not valid`);
+    shakeTiles();
   }
 }
 
@@ -166,6 +167,16 @@ function guessIsCorrect(result) {
 
 function gameIsOver() {
   return isWinning || currentRow > 5;
+}
+
+function showWinningMessage() {
+  console.log("Guess is correct");
+  showModal();
+}
+
+function showLosingMessage() {
+  console.log(`You lose! Keyword is ${keyword}`);
+  showModal();
 }
 
 // -------------------------------------------------------------
@@ -224,7 +235,18 @@ function cutLetter(word, index) {
 function addTilesColor(result, row = currentRow) {
   // TODO: Cập nhập màu sắc của các tiles trên row hiện tại theo result
   // Chú ý tương thích với hiệu ứng
-
+  result = checkUserGuess();
+  const boardRow = document.getElementById(`row-${row + 1}`);
+  const tiles = boardRow.querySelectorAll(".tile");
+  for(let i = 0; i < 5; i++){
+    const tile = tiles[i];
+    if(result[i] == correct){
+      tile.classList.add('tile--correct');
+    } else if(result[i] == present){
+      tile.classList.add('tile--present');
+    }else{
+      tile.classList.add('tile--absent')
+    }
   // Gợi ý: Thêm các lớp tile--absent, tile--present, và tile--correct
   // vào các tile tương ứng
 }
@@ -232,7 +254,15 @@ function addTilesColor(result, row = currentRow) {
 function addTilesAnimation(row = currentRow) {
   // TODO: Thêm hiệu ứng hiển thị tiles trên row hiện tại
   // Lưu ý có delay giữa các phím. Chú ý tương thích khi thêm màu
+  const boardRow = document.getElementById(`row-${row + 1}`);
+  const tiles = boardRow.querySelectorAll(".tile");
 
+  for (let i = 0; i < 5; i++) {
+    const tile = tiles[i];
+    tile.classList.add("tile--flip");
+    tile.style.backgroundColor = tileColor;
+    tile.style.animationDelay = "1s";
+  }
   // Gợi ý: Thêm lớp tile--flip vào tile
 }
 
@@ -241,12 +271,35 @@ function addKeysColor(result, guessRow = guesses[currentRow]) {
 
   // Hàm này truyền vào một mảng 5 phần tử chính là 5 ký tự mà người dùng vừa nhập
   // Đổi màu các phím guessRow trên bàn phím dựa vào kết quả result
-
+  for (i = 0; i < 5; i++)
+  {
+    let key = document.getElementById('key-' + guessRow[i]);
+    if(result[i] == correct) {
+      key.classList.add('key--correct');
+    }
+    else if (result[i] == present){
+      key.classList.add('key--present');
+    }
+    else {
+      key.classList.add('key--absent');
+    }
+  }
   // Gợi ý: Thêm các lớp key--absent, key--present, và key--correct
   // vào các phím tương ứng
 }
 
-// TODO: Thêm animation hiển thị tile khi nhập phím và error khi nhập không hợp lệ
+function shakeTiles(row = currentRow) {
+  // TODO: Thêm animation hiển thị tile khi nhập phím và error khi nhập không hợp lệ
+}
+
+// -------------------------------------------------------------
+// MODAL
+
+const closeModalIcon = document.querySelector(".modal__closeIcon");
+closeModalIcon.addEventListener("click", hideModal());
+
+function showModal() {}
+function hideModal() {}
 
 // -------------------------------------------------------------
 // REAL KEYBOARD
@@ -283,35 +336,6 @@ async function updateDictionary() {
 async function updateTargetWords() {
   const response = await fetch("./data/targetWords.json");
   targetWords = await response.json();
-}
-
-// -------------------------------------------------------------
-// TEST
-
-async function testGuessChecker() {
-  // https://github.com/yukosgiti/wordle-tests
-  let errorCount = 0;
-
-  const response = await fetch("./data/tests.json");
-  const bigTestCase = await response.json();
-
-  bigTestCase.forEach((testWord) => {
-    const word = testWord.slice(0, 5);
-    const guess = testWord.slice(6, 11);
-
-    const output = checkUserGuess(guess, word).reduce(
-      (outStr, char) =>
-        outStr + (isCorrect(char) ? "c" : isPresent(char) ? "m" : "w"),
-      ""
-    );
-
-    if (output !== testWord.slice(12, 17)) {
-      console.log(testWord, output);
-      errorCount++;
-    }
-  });
-
-  console.log(`Test Done! ${errorCount} error.`);
 }
 
 // -------------------------------------------------------------
