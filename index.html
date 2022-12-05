@@ -12,22 +12,22 @@
 </head>
 
 <body>
-  <div class="wordle-app-game">
+  <main class="wordle-app-game">
     <div class="board">
       <div id="row-1" class="board__row">
-        <span class="tile">A</span>
-        <span class="tile tile--absent">U</span>
-        <span class="tile tile--present">D</span>
-        <span class="tile tile--correct">I</span>
-        <span class="tile">O</span>
+        <span class="tile"></span>
+        <span class="tile"></span>
+        <span class="tile"></span>
+        <span class="tile"></span>
+        <span class="tile"></span>
       </div>
 
       <div id="row-2" class="board__row">
-        <span class="tile tile--flip">S</span>
-        <span class="tile tile--flip">H</span>
-        <span class="tile tile--flip">A</span>
-        <span class="tile tile--flip">R</span>
-        <span class="tile tile--flip">K</span>
+        <span class="tile"></span>
+        <span class="tile"></span>
+        <span class="tile"></span>
+        <span class="tile"></span>
+        <span class="tile"></span>
       </div>
 
       <div id="row-3" class="board__row">
@@ -78,7 +78,7 @@
       </div>
 
       <div class="keyboard__row">
-        <div class=spacer-row></div>
+        <div class="spacer-row"></div>
         <button id="key-a" class="key">A</button>
         <button id="key-s" class="key">S</button>
         <button id="key-d" class="key">D</button>
@@ -88,14 +88,14 @@
         <button id="key-j" class="key">J</button>
         <button id="key-k" class="key">K</button>
         <button id="key-l" class="key">L</button>
-        <div class=spacer-row></div>
+        <div class="spacer-row"></div>
       </div>
 
       <div class="keyboard__row">
         <button id="key-enter" class="key key--special">Enter</button>
-        <button id="key-z" class="key key--absent">Z</button>
-        <button id="key-x" class="key key--present">X</button>
-        <button id="key-c" class="key key--correct">C</button>
+        <button id="key-z" class="key">Z</button>
+        <button id="key-x" class="key">X</button>
+        <button id="key-c" class="key">C</button>
         <button id="key-v" class="key">V</button>
         <button id="key-b" class="key">B</button>
         <button id="key-n" class="key">N</button>
@@ -103,7 +103,15 @@
         <button id="key-delete" class="key key--special">⌫</button>
       </div>
     </div>
-  </div>
+  </main>
+
+  <aside class="modal">
+    <button class="modal__closeIcon">x</button>
+    <h1 class="modal__status">You win</h1>
+    <p class="modal__answer">The answer is AUDIO</p>
+    <div class="modal__stats"></div>
+    <button class="modal__pillBtn">New game</button>
+  </aside>
 </body>
 
 </html>

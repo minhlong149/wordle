@@ -124,13 +124,13 @@ body {
 
 .key {
   font-weight: bold;
-  
+
   background-color: var(--gray-key);
   color: var(--light-text);
-  
+
   border: 0;
   border-radius: 4px;
-  
+
   height: 58px;
   flex-grow: 1;
   flex-basis: 0;
@@ -147,24 +147,17 @@ body {
 .spacer-row {
   flex-grow: 0.5;
 }
-.key, .key--special, .key--absent, .key--present, .key--correct{
-	color:#fff;
-	transform: rotateX(360deg);
+
+.key--correct {
+  background-color: var(--green-correct);
 }
 
-.key--correct{
-	background-color: #35a535;
+.key--absent {
+  background-color: var(--dark-absent);
 }
 
-.key--absent{
-	background-color: #737373;
-}
-
-.key--special{
-	background-color: #d7bf4a;
-}
 .key--present {
-	background-color: #000;
+  background-color: var(--yellow-present);
 }
 
 /* ANIMATIONS */
