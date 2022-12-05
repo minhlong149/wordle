@@ -247,8 +247,9 @@ function addTilesColor(result, row = currentRow) {
     }else{
       tile.classList.add('tile--absent')
     }
-  // Gợi ý: Thêm các lớp tile--absent, tile--present, và tile--correct
-  // vào các tile tương ứng
+    // Gợi ý: Thêm các lớp tile--absent, tile--present, và tile--correct
+    // vào các tile tương ứng
+  }
 }
 
 function addTilesAnimation(row = currentRow) {
