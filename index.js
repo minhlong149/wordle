@@ -370,3 +370,10 @@ function randomItem(items) {
   await updateTargetWords();
   newGame();
 })();
+
+//Dark mode
+function DarkMode()
+{
+  var element = document.body;
+  element.classList.toggle('dark-mode');
+}

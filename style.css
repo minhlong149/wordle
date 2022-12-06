@@ -15,6 +15,11 @@ html,
 body {
   height: 100%;
 }
+/*Dark mode*/
+.dark-mode {
+  background-color: black;
+  color: white;
+}
 
 button {
   font: inherit;
