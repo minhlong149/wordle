@@ -36,6 +36,40 @@ let keyword = "";
 
 let isWinning = false;
 
+function loadLocalSave()//function dùng để load lại màn hình hiển thị và dữ liệu màn chơi dở
+{
+  keyword = window.localStorage.getItem('keyword')
+  row=Number(window.localStorage.getItem('currentRow'))
+  guess= JSON.parse(window.localStorage.getItem("guesses"))
+  result=JSON.parse(window.localStorage.getItem('result'))
+  if(guess!=null){
+    guesses=guess
+    for(let i=0;i<=row;i++)
+    {
+        for(let j=0;j<5;j++)
+        {
+          updateTileLetter()
+          addKeysColor(result)
+          currentTile++;
+        }
+        addTilesColor(result)
+        currentRow++;
+        currentTile=0;
+    }
+    currentRow=row+1;
+  }
+}
+
+function saveGameState(result)//function dùng để lưu những thông tin cần thiết để có thể load lại màn đang chơi dở
+{
+  window.localStorage.setItem('keyword', keyword)
+  window.localStorage.setItem('guesses', JSON.stringify(guesses));
+  window.localStorage.setItem('currentRow', currentRow);
+  window.localStorage.setItem('result', JSON.stringify(result))
+  window.localStorage.setItem('Reset',false)
+  
+}
+
 // -------------------------------------------------------------
 // KEYBOARD EVENT
 
@@ -131,13 +165,16 @@ function submitGuess() {
 
     // result sẽ trả về một mảng 5 phần tử
     // chứa 1 trong 3 giá trị correct, present hoặc absent
-
+    // function saveGameState() sẽ được gọi mỗi khi có từ hợp lệ được nhập
+    saveGameState(result);
     addTilesColor(result);
     addTilesAnimation();
 
     if (guessIsCorrect(result)) {
       isWinning = true;
       showWinningMessage();
+    //sử dụng key 'Reset' để quyết định tạo màn chơi mới khi đoán đúng, hết lượt hay load lại màn đang chơi dở 
+      window.localStorage.setItem('Reset',true)
     } else {
       console.log("Guess is NOT correct");
 
@@ -147,6 +184,7 @@ function submitGuess() {
 
       if (gameIsOver()) {
         showLosingMessage();
+        window.localStorage.setItem('Reset',true)
       }
     }
   } else {
@@ -261,7 +299,7 @@ function addTilesAnimation(row = currentRow) {
   for (let i = 0; i < 5; i++) {
     const tile = tiles[i];
     tile.classList.add("tile--flip");
-    tile.style.backgroundColor = tileColor;
+    //tile.style.backgroundColor = tileColor;
     tile.style.animationDelay = "1s";
   }
   // Gợi ý: Thêm lớp tile--flip vào tile
@@ -343,7 +381,6 @@ async function updateTargetWords() {
 // UTILS
 
 function newGame() {
-  keyword = getRandomWord();
   guesses = [
     ["", "", "", "", ""],
     ["", "", "", "", ""],
@@ -355,6 +392,13 @@ function newGame() {
   currentRow = 0;
   currentTile = 0;
   isWinning = false;
+  //Nếu key 'Reset là false thì load lại màn đang chơi dở còn không thì tạo một keyword ngấu nhiên và bắt đầu màn chơi mới
+  if(JSON.parse(window.localStorage.getItem('Reset'))==false)
+  { 
+    loadLocalSave();
+  }else{
+    keyword = getRandomWord();
+  }
 }
 
 function getRandomWord() {
