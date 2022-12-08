@@ -299,8 +299,9 @@ function addTilesAnimation(row = currentRow) {
   for (let i = 0; i < 5; i++) {
     const tile = tiles[i];
     tile.classList.add("tile--flip");
-    //tile.style.backgroundColor = tileColor;
-    tile.style.animationDelay = "1s";
+    tile.style.animationDelay = `${i / 3}s`;
+    tile.style.transitionProperty = "background-color";
+    tile.style.transitionDelay = `${i / 3}s`;
   }
   // Gợi ý: Thêm lớp tile--flip vào tile
 }
