@@ -313,13 +313,21 @@ function addKeysColor(result, guessRow = guesses[currentRow]) {
   for (i = 0; i < 5; i++)
   {
     let key = document.getElementById('key-' + guessRow[i]);
-    if(result[i] == correct) {
+    console.log(key);
+    if(isCorrect(result[i])) {
+      key.classList.remove('key--absent');
+      key.classList.remove('key--present');
       key.classList.add('key--correct');
     }
-    else if (result[i] == present){
-      key.classList.add('key--present');
+    else if (isPresent(result[i])){
+      if(key.classList.value != 'key key--correct'){
+        key.classList.remove('key--absent');
+        key.classList.add('key--present');
+      }
     }
     else {
+      if(key.classList.value != 'key key--correct' && 
+        key.classList.value != 'key key--present')
       key.classList.add('key--absent');
     }
   }
