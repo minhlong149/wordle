@@ -1,5 +1,3 @@
-// -------------------------------------------------------------
-
 // guesses là một mảng có 6 phần từ
 // tương ứng với 6 lần mà người dùng nhập
 // lưu lại tiến trình chơi của người dùng
@@ -14,8 +12,6 @@ let guesses = [
   ["", "", "", "", ""],
   ["", "", "", "", ""],
 ];
-
-
 
 // gọi hàm getUserGuess lấy từ mà người dùng đoán dưới dạng chuỗi
 function getUserGuess(row = currentRow) {
@@ -36,8 +32,9 @@ let keyword = "";
 
 let isWinning = false;
 
-function loadLocalSave()//function dùng để load lại màn hình hiển thị và dữ liệu màn chơi dở
+function loadLocalSave()
 {
+  // Load lại màn hình hiển thị và dữ liệu màn chơi dở
   keyword = window.localStorage.getItem('keyword')
   row=Number(window.localStorage.getItem('currentRow'))
   guess= JSON.parse(window.localStorage.getItem("guesses"))
@@ -60,14 +57,14 @@ function loadLocalSave()//function dùng để load lại màn hình hiển th�
   }
 }
 
-function saveGameState(result)//function dùng để lưu những thông tin cần thiết để có thể load lại màn đang chơi dở
+function saveGameState(result)
 {
-  window.localStorage.setItem('keyword', keyword)
-  window.localStorage.setItem('guesses', JSON.stringify(guesses));
-  window.localStorage.setItem('currentRow', currentRow);
-  window.localStorage.setItem('result', JSON.stringify(result))
-  window.localStorage.setItem('Reset',false)
-  
+  // Lưu những thông tin cần thiết để có thể load lại màn đang chơi dở
+  window.localStorage.setItem("keyword", keyword);
+  window.localStorage.setItem("guesses", JSON.stringify(guesses));
+  window.localStorage.setItem("currentRow", currentRow);
+  window.localStorage.setItem("result", JSON.stringify(result));
+  window.localStorage.setItem("Reset", false);
 }
 
 // -------------------------------------------------------------
@@ -139,7 +136,7 @@ function updateTileLetter(
   row = currentRow,
   tile = currentTile
 ) {
-  // TODO: Cập nhập ký tự letter lên Board
+  // Cập nhập ký tự letter lên Board
   // dựa vào row và tile để xác định vị trí cần thêm vào
   row++;
   const nextRow = document.getElementById('row-' + row);
@@ -173,7 +170,7 @@ function submitGuess() {
     if (guessIsCorrect(result)) {
       isWinning = true;
       showWinningMessage();
-    //sử dụng key 'Reset' để quyết định tạo màn chơi mới khi đoán đúng, hết lượt hay load lại màn đang chơi dở 
+      //sử dụng key 'Reset' để quyết định tạo màn chơi mới khi đoán đúng, hết lượt hay load lại màn đang chơi dở 
       window.localStorage.setItem('Reset',true)
     } else {
       console.log("Guess is NOT correct");
@@ -271,13 +268,14 @@ function cutLetter(word, index) {
 // ADD COLOR & ANIMATION
 
 function addTilesColor(result, row = currentRow) {
-  // TODO: Cập nhập màu sắc của các tiles trên row hiện tại theo result
-  // Chú ý tương thích với hiệu ứng
+  // Cập nhập màu sắc của các tiles trên row hiện tại theo result
   result = checkUserGuess();
   const boardRow = document.getElementById(`row-${row + 1}`);
   const tiles = boardRow.querySelectorAll(".tile");
   for(let i = 0; i < 5; i++){
     const tile = tiles[i];
+    // Thêm các lớp tile--absent, tile--present, và tile--correct
+    // vào các tile tương ứng
     if(result[i] == correct){
       tile.classList.add('tile--correct');
     } else if(result[i] == present){
@@ -285,36 +283,35 @@ function addTilesColor(result, row = currentRow) {
     }else{
       tile.classList.add('tile--absent')
     }
-    // Gợi ý: Thêm các lớp tile--absent, tile--present, và tile--correct
-    // vào các tile tương ứng
   }
 }
 
 function addTilesAnimation(row = currentRow) {
-  // TODO: Thêm hiệu ứng hiển thị tiles trên row hiện tại
-  // Lưu ý có delay giữa các phím. Chú ý tương thích khi thêm màu
+  // Thêm hiệu ứng hiển thị tiles trên row hiện tại
   const boardRow = document.getElementById(`row-${row + 1}`);
   const tiles = boardRow.querySelectorAll(".tile");
-
+  
   for (let i = 0; i < 5; i++) {
     const tile = tiles[i];
     tile.classList.add("tile--flip");
+
+    // Thêm delay giữa các phím
     tile.style.animationDelay = `${i / 3}s`;
     tile.style.transitionProperty = "background-color";
     tile.style.transitionDelay = `${i / 3}s`;
   }
-  // Gợi ý: Thêm lớp tile--flip vào tile
 }
 
 function addKeysColor(result, guessRow = guesses[currentRow]) {
-  // TODO: Cập nhập màu sắc của các phím đã vừa ấn
+  // Cập nhập màu sắc của các phím đã vừa ấn
   
   // Hàm này truyền vào một mảng 5 phần tử chính là 5 ký tự mà người dùng vừa nhập
   // Đổi màu các phím guessRow trên bàn phím dựa vào kết quả result
   for (i = 0; i < 5; i++)
   {
     let key = document.getElementById('key-' + guessRow[i]);
-    console.log(key);
+    // Gợi ý: Thêm các lớp key--absent, key--present, và key--correct
+    // vào các phím tương ứng
     if(isCorrect(result[i])) {
       key.classList.remove('key--absent');
       key.classList.remove('key--present');
@@ -332,12 +329,10 @@ function addKeysColor(result, guessRow = guesses[currentRow]) {
       key.classList.add('key--absent');
     }
   }
-  // Gợi ý: Thêm các lớp key--absent, key--present, và key--correct
-  // vào các phím tương ứng
 }
 
 function shakeTiles(row = currentRow) {
-  // TODO: Thêm animation hiển thị tile khi nhập phím và error khi nhập không hợp lệ
+  // Thêm animation hiển thị tile khi nhập phím và error khi nhập không hợp lệ
   const boardRow = document.getElementById(`row-${row + 1}`);
   const tiles = boardRow.querySelectorAll(".tile");
 
@@ -359,10 +354,9 @@ function hideModal() {}
 // -------------------------------------------------------------
 // REAL KEYBOARD
 
-// TODO: Tạo sự kiện cho các phím trên bàn phím thực
+// Tạo sự kiện cho các phím trên bàn phím thực
 // có thể xử lý được như dùng bàn phím trên trang web
 addEventListener("keyup",function(event){
-
   if(event.code  >= 'KeyA' && event.code  <= 'KeyZ')
     addLetter(event.key);
   else if (event.code == 'Enter')
@@ -431,7 +425,9 @@ function randomItem(items) {
   newGame();
 })();
 
-//Dark mode
+// -------------------------------------------------------------
+// DARK MODE
+
 function DarkMode()
 {
   var element = document.body;
