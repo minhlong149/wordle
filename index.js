@@ -307,19 +307,27 @@ function addTilesAnimation(row = currentRow) {
 
 function addKeysColor(result, guessRow = guesses[currentRow]) {
   // TODO: Cập nhập màu sắc của các phím đã vừa ấn
-
+  
   // Hàm này truyền vào một mảng 5 phần tử chính là 5 ký tự mà người dùng vừa nhập
   // Đổi màu các phím guessRow trên bàn phím dựa vào kết quả result
   for (i = 0; i < 5; i++)
   {
     let key = document.getElementById('key-' + guessRow[i]);
-    if(result[i] == correct) {
+    console.log(key);
+    if(isCorrect(result[i])) {
+      key.classList.remove('key--absent');
+      key.classList.remove('key--present');
       key.classList.add('key--correct');
     }
-    else if (result[i] == present){
-      key.classList.add('key--present');
+    else if (isPresent(result[i])){
+      if(key.classList.value != 'key key--correct'){
+        key.classList.remove('key--absent');
+        key.classList.add('key--present');
+      }
     }
     else {
+      if(key.classList.value != 'key key--correct' && 
+        key.classList.value != 'key key--present')
       key.classList.add('key--absent');
     }
   }
