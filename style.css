@@ -38,13 +38,41 @@ button {
   --gray-border: #3a3a3c;
 }
 
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+@font-face {
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/pressstart2p/v14/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
+  color: var(--light-text) ;
   background-color: var(--dark-bg);
 }
 
 /* OVERALL LAYOUT */
-.wordle-app-game {
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main {
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
   display: flex;
@@ -53,9 +81,32 @@ body {
   height: 100%;
 }
 
+aside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .board {
-  flex-grow: grow;
   height: 100%;
+}
+
+/* HEADER */
+
+header {
+  padding: 1em;
+}
+
+.header__logo {
+  font-family: 'Press Start 2P', cursive;
+}
+
+.btn--reset {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
 }
 
 /* BOARD */
@@ -160,24 +211,50 @@ body {
   background-color: var(--yellow-present);
 }
 
+/* MODAL */
+
+.modal--hidden {
+  display: none;
+}
+
 /* ANIMATIONS */
 
 @keyframes flip {
   0% {
-    transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+    transform: scaleY(1);
   }
 
   50% {
-    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: scaleY(0);
   }
 
   100% {
-    transform: perspective(400px) rotate3d(1, 0, 0, 180deg);
+    transform: scaleY(1);
   }
 }
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-10px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+  
 
 .tile--flip {
-  backface-visibility: visible;
   animation-name: flip;
-  animation-duration: 2s;
+  animation-duration: 1s;
+}
+.tile--shake {
+  animation-name: shake;
+  animation-duration: 0.5s;
 }

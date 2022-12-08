@@ -12,7 +12,15 @@
 </head>
 
 <body>
-  <main class="wordle-app-game">
+  <header>
+    <button class="header__resetBtn btn--reset"><img src="./assets/refresh_white.svg" alt=""></button>
+    <span class="header__logo" >Wordle</span>
+    <button class="header__themeBtn btn--reset" onclick="DarkMode()">
+      <img src="./assets/dark_mode_white.svg" alt="">
+    </button>
+  </header>
+
+  <main>
     <div class="board">
       <div id="row-1" class="board__row">
         <span class="tile"></span>
@@ -105,8 +113,8 @@
     </div>
   </main>
 
-  <aside class="modal">
-    <button class="modal__closeIcon">x</button>
+  <aside class="modal modal--hidden">
+    <button class="modal__closeIcon btn--reset">x</button>
     <h1 class="modal__status">You win</h1>
     <p class="modal__answer">The answer is AUDIO</p>
     <div class="modal__stats"></div>

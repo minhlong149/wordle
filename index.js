@@ -329,6 +329,13 @@ function addKeysColor(result, guessRow = guesses[currentRow]) {
 
 function shakeTiles(row = currentRow) {
   // TODO: Thêm animation hiển thị tile khi nhập phím và error khi nhập không hợp lệ
+  const boardRow = document.getElementById(`row-${row + 1}`);
+  const tiles = boardRow.querySelectorAll(".tile");
+
+  for (let i = 0; i < 5; i++) {
+    const tile = tiles[i];
+    tile.classList.add("tile--shake");
+  }
 }
 
 // -------------------------------------------------------------
@@ -347,11 +354,11 @@ function hideModal() {}
 // có thể xử lý được như dùng bàn phím trên trang web
 addEventListener("keyup",function(event){
 
-  if(event.keyCode >= 65 && event.keyCode <= 90)
+  if(event.code  >= 'KeyA' && event.code  <= 'KeyZ')
     addLetter(event.key);
-  else if (event.keyCode == 13)
+  else if (event.code == 'Enter')
     submitGuess();
-  else if (event.keyCode == 8)
+  else if (event.code == 'Backspace')
     deleteLetter();
 })
 // Chỉ yêu cầu các phím chữ cái, nút xoá (backspace) và enter
@@ -414,3 +421,10 @@ function randomItem(items) {
   await updateTargetWords();
   newGame();
 })();
+
+//Dark mode
+function DarkMode()
+{
+  var element = document.body;
+  element.classList.toggle('dark-mode');
+}
