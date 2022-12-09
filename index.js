@@ -436,8 +436,4 @@ function DarkMode()
 {
   var element = document.body;
   element.classList.toggle('dark-mode');
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c8b42518e1c33285fa7e16c5e5edd089853b8386
