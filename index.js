@@ -299,27 +299,36 @@ function addTilesAnimation(row = currentRow) {
   for (let i = 0; i < 5; i++) {
     const tile = tiles[i];
     tile.classList.add("tile--flip");
-    //tile.style.backgroundColor = tileColor;
-    tile.style.animationDelay = "1s";
+    tile.style.animationDelay = `${i / 3}s`;
+    tile.style.transitionProperty = "background-color";
+    tile.style.transitionDelay = `${i / 3}s`;
   }
   // Gợi ý: Thêm lớp tile--flip vào tile
 }
 
 function addKeysColor(result, guessRow = guesses[currentRow]) {
   // TODO: Cập nhập màu sắc của các phím đã vừa ấn
-
+  
   // Hàm này truyền vào một mảng 5 phần tử chính là 5 ký tự mà người dùng vừa nhập
   // Đổi màu các phím guessRow trên bàn phím dựa vào kết quả result
   for (i = 0; i < 5; i++)
   {
     let key = document.getElementById('key-' + guessRow[i]);
-    if(result[i] == correct) {
+    console.log(key);
+    if(isCorrect(result[i])) {
+      key.classList.remove('key--absent');
+      key.classList.remove('key--present');
       key.classList.add('key--correct');
     }
-    else if (result[i] == present){
-      key.classList.add('key--present');
+    else if (isPresent(result[i])){
+      if(key.classList.value != 'key key--correct'){
+        key.classList.remove('key--absent');
+        key.classList.add('key--present');
+      }
     }
     else {
+      if(key.classList.value != 'key key--correct' && 
+        key.classList.value != 'key key--present')
       key.classList.add('key--absent');
     }
   }
@@ -329,6 +338,13 @@ function addKeysColor(result, guessRow = guesses[currentRow]) {
 
 function shakeTiles(row = currentRow) {
   // TODO: Thêm animation hiển thị tile khi nhập phím và error khi nhập không hợp lệ
+  const boardRow = document.getElementById(`row-${row + 1}`);
+  const tiles = boardRow.querySelectorAll(".tile");
+
+  for (let i = 0; i < 5; i++) {
+    const tile = tiles[i];
+    tile.classList.add("tile--shake");
+  }
 }
 
 // -------------------------------------------------------------
@@ -420,4 +436,8 @@ function DarkMode()
 {
   var element = document.body;
   element.classList.toggle('dark-mode');
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c8b42518e1c33285fa7e16c5e5edd089853b8386
