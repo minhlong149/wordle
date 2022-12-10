@@ -110,6 +110,7 @@ aside {
 
 header {
   padding: 1em;
+  border-bottom: 2px solid var(--gray-border);
 }
 
 .header__logo {
@@ -121,6 +122,7 @@ header {
   color: inherit;
   border: none;
   padding: 0;
+  cursor: pointer;
 }
 
 /* BOARD */

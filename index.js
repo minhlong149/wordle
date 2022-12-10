@@ -302,6 +302,11 @@ function addTilesAnimation(row = currentRow) {
     tile.style.animationDelay = `${i / 3}s`;
     tile.style.transitionProperty = "background-color";
     tile.style.transitionDelay = `${i / 3}s`;
+
+    setTimeout(() => {
+      tile.removeAttribute("style");
+      tile.classList.remove("tile--flip");
+    }, 2500);
   }
   // Gợi ý: Thêm lớp tile--flip vào tile
 }
@@ -314,7 +319,6 @@ function addKeysColor(result, guessRow = guesses[currentRow]) {
   for (i = 0; i < 5; i++)
   {
     let key = document.getElementById('key-' + guessRow[i]);
-    console.log(key);
     if(isCorrect(result[i])) {
       key.classList.remove('key--absent');
       key.classList.remove('key--present');
@@ -344,6 +348,10 @@ function shakeTiles(row = currentRow) {
   for (let i = 0; i < 5; i++) {
     const tile = tiles[i];
     tile.classList.add("tile--shake");
+
+    setTimeout(() => {
+      tile.classList.remove("tile--shake");
+    }, 500);
   }
 }
 
@@ -394,9 +402,54 @@ async function updateTargetWords() {
 }
 
 // -------------------------------------------------------------
+// RESET GAME
+
+const resetBtn = document.querySelector(".header__resetBtn");
+resetBtn.addEventListener("click", resetGame);
+
+function resetGame() {
+  console.log("clicked");
+  // Clean board
+  const tileClasses = [
+    "tile--absent",
+    "tile--present",
+    "tile--correct",
+    "tile--flip",
+    "tile--shake",
+  ];
+
+  const tiles = document.querySelectorAll(".tile");
+  tiles.forEach((tile) => {
+    tile.classList.remove(...tileClasses);
+    tile.textContent = "";
+  });
+
+  // Clean keyboard
+  const keyClasses = ["key--absent", "key--present", "key--correct"];
+
+  const keys = document.querySelectorAll(".key");
+  keys.forEach((key) => {
+    key.classList.remove(...keyClasses);
+  });
+
+  newGame();
+  saveGameState();
+}
+
+// -------------------------------------------------------------
 // UTILS
 
+function startGame() {
+  //Nếu key 'Reset là false thì load lại màn đang chơi dở còn không thì tạo một keyword ngấu nhiên và bắt đầu màn chơi mới
+  if (JSON.parse(window.localStorage.getItem("Reset")) == false) {
+    loadLocalSave();
+  } else {
+    newGame();
+  }
+}
+
 function newGame() {
+  keyword = getRandomWord();
   guesses = [
     ["", "", "", "", ""],
     ["", "", "", "", ""],
@@ -408,13 +461,6 @@ function newGame() {
   currentRow = 0;
   currentTile = 0;
   isWinning = false;
-  //Nếu key 'Reset là false thì load lại màn đang chơi dở còn không thì tạo một keyword ngấu nhiên và bắt đầu màn chơi mới
-  if(JSON.parse(window.localStorage.getItem('Reset'))==false)
-  { 
-    loadLocalSave();
-  }else{
-    keyword = getRandomWord();
-  }
 }
 
 function getRandomWord() {
@@ -428,7 +474,7 @@ function randomItem(items) {
 (async function () {
   await updateDictionary();
   await updateTargetWords();
-  newGame();
+  startGame();
 })();
 
 
