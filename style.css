@@ -114,6 +114,7 @@ aside {
 
 header {
   padding: 1em;
+  border-bottom: 2px solid var(--gray-border);
 }
 
 .header__logo {
