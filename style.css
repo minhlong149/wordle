@@ -240,7 +240,7 @@ header {
 }
 
 .modal {
-  background: red;
+  background-color: var(--dark-bg);
 
   display: flex;
   flex-direction: column;
@@ -260,10 +260,12 @@ header {
   top: 0;
 
   align-self: end;
-  background: yellowgreen;
+  background: var(--yellow-present);
   border-radius: 50%;
   padding: 0.5rem;
-  margin: 0.5rem;
+  margin: 1rem;
+
+  line-height: 0;
 }
 
 .modal__reset {
