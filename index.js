@@ -171,10 +171,7 @@ function submitGuess() {
     addTilesAnimation();
 
     if (guessIsCorrect(result)) {
-      isWinning = true;
-      showWinningMessage();
-    //sử dụng key 'Reset' để quyết định tạo màn chơi mới khi đoán đúng, hết lượt hay load lại màn đang chơi dở 
-      window.localStorage.setItem('Reset',true)
+      handleWinning();
     } else {
       console.log("Guess is NOT correct");
 
@@ -183,8 +180,7 @@ function submitGuess() {
       currentTile = 0;
 
       if (gameIsOver()) {
-        showLosingMessage();
-        window.localStorage.setItem('Reset',true)
+        handleLosing();
       }
     }
   } else {
@@ -207,14 +203,18 @@ function gameIsOver() {
   return isWinning || currentRow > 5;
 }
 
-function showWinningMessage() {
+function handleWinning() {
+  isWinning = true;
   console.log("Guess is correct");
-  showModal();
+  //sử dụng key 'Reset' để quyết định tạo màn chơi mới khi đoán đúng, hết lượt hay load lại màn đang chơi dở
+  window.localStorage.setItem("Reset", true);
+  setTimeout(showModal, 2500);
 }
 
-function showLosingMessage() {
+function handleLosing() {
   console.log(`You lose! Keyword is ${keyword}`);
-  showModal();
+  window.localStorage.setItem("Reset", true);
+  setTimeout(showModal, 2500);
 }
 
 // -------------------------------------------------------------
@@ -358,11 +358,28 @@ function shakeTiles(row = currentRow) {
 // -------------------------------------------------------------
 // MODAL
 
-const closeModalIcon = document.querySelector(".modal__closeIcon");
-closeModalIcon.addEventListener("click", hideModal());
+const modalContainer = document.querySelector(".modal-container");
+const modalCloseBtn = document.querySelector(".modal__close");
+const modalResetBtn = document.querySelector(".modal__reset");
 
-function showModal() {}
-function hideModal() {}
+function showModal() {
+  modalContainer.classList.add("modal--show");
+
+  const status = document.querySelector(".modal__status");
+  status.textContent = isWinning ? "You win" : "You lose";
+
+  const answer = document.querySelector(".modal__answer");
+  answer.textContent = `The answer is ${keyword.toUpperCase()}`;
+}
+
+[modalContainer, modalCloseBtn, modalResetBtn].forEach((element) => {
+  element.addEventListener("click", hideModal);
+});
+
+function hideModal() {
+  modalContainer.classList.remove("modal--show");
+  resetGame();
+}
 
 // -------------------------------------------------------------
 // REAL KEYBOARD
@@ -408,7 +425,6 @@ const resetBtn = document.querySelector(".header__resetBtn");
 resetBtn.addEventListener("click", resetGame);
 
 function resetGame() {
-  console.log("clicked");
   // Clean board
   const tileClasses = [
     "tile--absent",
