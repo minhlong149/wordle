@@ -344,6 +344,9 @@ function shakeTiles(row = currentRow) {
   for (let i = 0; i < 5; i++) {
     const tile = tiles[i];
     tile.classList.add("tile--shake");
+  const animationDuration = 500; //ms
+	tile.classList.add('tile--shake');
+	tile.style.animationDelay = `${(i * animationDuration) / 2}ms`;
   }
 }
 
