@@ -34,9 +34,11 @@ button {
   --green-correct: #538d4e;
   --yellow-present: #b59f3b;
   --dark-absent: #3a3a3c;
-  /* Borger */
-  --gray-border: #3a3a3c;
-  /*Text*/
+  
+   /* Borger */
+   --gray-border: #3a3a3c;
+   
+   /*Text*/
   --light-text: #ffffff;
 
 }
@@ -48,11 +50,10 @@ body.dark {
   --light-text: #ffffff;
 }
 
-
 body.light{
   /*Background*/
   --dark-bg: #ebebf0;
-
+ 
   /*Text*/
   --light-text: #121213;
 }

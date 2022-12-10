@@ -494,57 +494,39 @@ function randomItem(items) {
 })();
 
 
-/*Dark/Light mode*/
-function getUserPreference() {
-  return localStorage.getItem('theme') || 'system';
-}
-function saveUserPreference(userPreference) {
-  localStorage.setItem('theme', userPreference);
-}
+/*Dark mode*/
 
-
-function getAppliedMode(userPreference) {
-  if (userPreference === 'light') {
-    return 'light';
-  }
-  if (userPreference === 'dark') {
-    return 'dark';
-  }
- // system
-  if (matchMedia('(prefers-color-scheme: light)').matches) {
-    return 'light';
-  }
-  return 'dark';
-}
-
-const colorScheme = document.querySelector('meta[name="color-scheme"]');
-function setAppliedMode(mode) {
-  document.body.className = mode;
-  rotatePreferences(mode);
-}
-
-function rotatePreferences(userPreference) {
-  
-  if (userPreference === 'dark') {
-    iconMode.setAttribute('src',"./assets/dark_mode_white.svg");
-    iconReset.setAttribute('src',"./assets/refresh_white.svg");
-    return 'light';
-  }
-  if (userPreference === 'light') {
-    iconMode.setAttribute('src',"./assets/dark_mode_black.svg");
-    iconReset.setAttribute('src',"./assets/refresh_black.svg");
-    return 'dark';
-  }
-}
-
+const swithButton = document.getElementsByClassName('mode');
+const defualtLight =matchMedia('(prefers-color-scheme: light)').matches;
+let theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : (defualtLight ? "light" : "dark");
 const iconMode = document.getElementById("mode");
 const iconReset = document.getElementById("reset");
-let userPreference = getUserPreference();
-setAppliedMode(getAppliedMode(userPreference));
-
-function DarkMode() {
-  const newUserPref = rotatePreferences(userPreference);
-  userPreference = newUserPref;
-  saveUserPreference(newUserPref);
-  setAppliedMode(getAppliedMode(newUserPref));
+//Set theme theo hệ thống
+setTheme(theme);
+//Đổi giữa dark mode và light mode
+function switchTheme()
+{
+  theme = theme ==="light" ? "dark": "light";
+  localStorage.setItem("theme", theme);
+  setTheme(theme);
 }
+
+//Set lại theme sau khi thay đổi mode
+function setTheme (mode)
+{
+  if (mode === 'light')
+  {
+    document.body.classList.remove('dark'); 
+    document.body.classList.toggle('light');
+    iconMode.setAttribute('src',"./assets/dark_mode_black.svg");
+    iconReset.setAttribute('src',"./assets/refresh_black.svg");
+  }
+  if (mode === 'dark')
+  { 
+    document.body.classList.remove('light');
+    document.body.classList.toggle('dark');
+    iconMode.setAttribute('src',"./assets/dark_mode_white.svg");
+    iconReset.setAttribute('src',"./assets/refresh_white.svg");
+  }
+}
+
