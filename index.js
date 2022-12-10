@@ -432,57 +432,21 @@ function randomItem(items) {
 })();
 
 
-/*Dark/Light mode*/
-function getUserPreference() {
-  return localStorage.getItem('theme') || 'system';
-}
-function saveUserPreference(userPreference) {
-  localStorage.setItem('theme', userPreference);
-}
-
-
-function getAppliedMode(userPreference) {
-  if (userPreference === 'light') {
-    return 'light';
-  }
-  if (userPreference === 'dark') {
-    return 'dark';
-  }
- // system
-  if (matchMedia('(prefers-color-scheme: light)').matches) {
-    return 'light';
-  }
-  return 'dark';
-}
-
-const colorScheme = document.querySelector('meta[name="color-scheme"]');
-function setAppliedMode(mode) {
-  document.body.className = mode;
-  rotatePreferences(mode);
-}
-
-function rotatePreferences(userPreference) {
-  
-  if (userPreference === 'dark') {
-    iconMode.setAttribute('src',"./assets/dark_mode_white.svg");
-    iconReset.setAttribute('src',"./assets/refresh_white.svg");
-    return 'light';
-  }
-  if (userPreference === 'light') {
-    iconMode.setAttribute('src',"./assets/dark_mode_black.svg");
-    iconReset.setAttribute('src',"./assets/refresh_black.svg");
-    return 'dark';
-  }
-}
 
 const iconMode = document.getElementById("mode");
 const iconReset = document.getElementById("reset");
-let userPreference = getUserPreference();
-setAppliedMode(getAppliedMode(userPreference));
-
 function DarkMode() {
-  const newUserPref = rotatePreferences(userPreference);
-  userPreference = newUserPref;
-  saveUserPreference(newUserPref);
-  setAppliedMode(getAppliedMode(newUserPref));
+  let element = document.body;
+  element.classList.toggle('light');
+  let mode = document.getElementsByClassName('light');
+  if(mode.length == 1)
+  {
+    iconMode.setAttribute('src',"./assets/dark_mode_black.svg");
+    iconReset.setAttribute('src',"./assets/refresh_black.svg");
+  }
+  else
+  {
+    iconMode.setAttribute('src',"./assets/dark_mode_white.svg");
+    iconReset.setAttribute('src',"./assets/refresh_white.svg");
+  }
 }
