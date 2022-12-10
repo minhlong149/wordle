@@ -348,7 +348,7 @@ function shakeTiles(row = currentRow) {
   for (let i = 0; i < 5; i++) {
     const tile = tiles[i];
     tile.classList.add("tile--shake");
-    
+
     setTimeout(() => {
       tile.classList.remove("tile--shake");
     }, 500);
@@ -369,7 +369,7 @@ function hideModal() {}
 
 // TODO: Tạo sự kiện cho các phím trên bàn phím thực
 // có thể xử lý được như dùng bàn phím trên trang web
-document.body.addEventListener("keyup",function(event){
+addEventListener("keyup",function(event){
 
   if(event.code  >= 'KeyA' && event.code  <= 'KeyZ')
     addLetter(event.key);
