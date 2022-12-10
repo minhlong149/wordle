@@ -34,36 +34,27 @@ let isWinning = false;
 
 function loadLocalSave()
 {
+  keyword = window.localStorage.getItem("keyword");
+  guesses = JSON.parse(window.localStorage.getItem("guesses"));
+
   // Load lại màn hình hiển thị và dữ liệu màn chơi dở
-  keyword = window.localStorage.getItem('keyword')
-  row=Number(window.localStorage.getItem('currentRow'))
-  guess= JSON.parse(window.localStorage.getItem("guesses"))
-  result=JSON.parse(window.localStorage.getItem('result'))
-  if(guess!=null){
-    guesses=guess
-    for(let i=0;i<=row;i++)
-    {
-        for(let j=0;j<5;j++)
-        {
-          updateTileLetter()
-          addKeysColor(result)
-          currentTile++;
-        }
-        addTilesColor(result)
-        currentRow++;
-        currentTile=0;
+  if (guesses != null) {
+    for (currentRow = 0; guesses[currentRow][currentTile] != ""; currentRow++) {
+      for (currentTile = 0; currentTile < 5; currentTile++) {
+        updateTileLetter();
+        addKeysColor();
+      }
+      addTilesColor();
+      currentTile = 0;
     }
-    currentRow=row+1;
   }
 }
 
-function saveGameState(result)
+function saveGameState()
 {
   // Lưu những thông tin cần thiết để có thể load lại màn đang chơi dở
   window.localStorage.setItem("keyword", keyword);
   window.localStorage.setItem("guesses", JSON.stringify(guesses));
-  window.localStorage.setItem("currentRow", currentRow);
-  window.localStorage.setItem("result", JSON.stringify(result));
   window.localStorage.setItem("Reset", false);
 }
 
@@ -163,8 +154,8 @@ function submitGuess() {
     // result sẽ trả về một mảng 5 phần tử
     // chứa 1 trong 3 giá trị correct, present hoặc absent
     // function saveGameState() sẽ được gọi mỗi khi có từ hợp lệ được nhập
-    saveGameState(result);
-    addTilesColor(result);
+    saveGameState();
+    addTilesColor();
     addTilesAnimation();
 
     if (guessIsCorrect(result)) {
@@ -267,9 +258,8 @@ function cutLetter(word, index) {
 // -------------------------------------------------------------
 // ADD COLOR & ANIMATION
 
-function addTilesColor(result, row = currentRow) {
+function addTilesColor(result = checkUserGuess(), row = currentRow) {
   // Cập nhập màu sắc của các tiles trên row hiện tại theo result
-  result = checkUserGuess();
   const boardRow = document.getElementById(`row-${row + 1}`);
   const tiles = boardRow.querySelectorAll(".tile");
   for(let i = 0; i < 5; i++){
@@ -302,9 +292,12 @@ function addTilesAnimation(row = currentRow) {
   }
 }
 
-function addKeysColor(result, guessRow = guesses[currentRow]) {
+function addKeysColor(
+  result = checkUserGuess(),
+  guessRow = guesses[currentRow]
+) {
   // Cập nhập màu sắc của các phím đã vừa ấn
-  
+
   // Hàm này truyền vào một mảng 5 phần tử chính là 5 ký tự mà người dùng vừa nhập
   // Đổi màu các phím guessRow trên bàn phím dựa vào kết quả result
   for (i = 0; i < 5; i++)
@@ -316,7 +309,7 @@ function addKeysColor(result, guessRow = guesses[currentRow]) {
       key.classList.remove('key--absent');
       key.classList.remove('key--present');
       key.classList.add('key--correct');
-    }
+      }
     else if (isPresent(result[i])){
       if(key.classList.value != 'key key--correct'){
         key.classList.remove('key--absent');
@@ -391,17 +384,17 @@ async function updateTargetWords() {
 // UTILS
 
 function newGame() {
-  guesses = [
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-    ["", "", "", "", ""],
-  ];
-  currentRow = 0;
-  currentTile = 0;
-  isWinning = false;
+    guesses = [
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+      ["", "", "", "", ""],
+    ];
+    currentRow = 0;
+    currentTile = 0;
+    isWinning = false;
   //Nếu key 'Reset là false thì load lại màn đang chơi dở còn không thì tạo một keyword ngấu nhiên và bắt đầu màn chơi mới
   if(JSON.parse(window.localStorage.getItem('Reset'))==false)
   { 
